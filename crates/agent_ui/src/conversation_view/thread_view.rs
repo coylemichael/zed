@@ -4118,6 +4118,7 @@ impl ThreadView {
                                     "edit-label",
                                     Animation::new(Duration::from_secs(2))
                                         .repeat()
+                                        .with_max_fps(ui::animation::DECORATIVE_ANIMATION_MAX_FPS)
                                         .with_easing(pulsating_between(0.3, 0.7)),
                                     |label, delta| label.alpha(delta),
                                 ),
@@ -9931,7 +9932,9 @@ impl ThreadView {
 
             modified.with_animation(
                 ElementId::Integer(n),
-                Animation::new(Duration::from_secs(2)).repeat(),
+                Animation::new(Duration::from_secs(2))
+                    .repeat()
+                    .with_max_fps(ui::animation::DECORATIVE_ANIMATION_MAX_FPS),
                 move |tab, delta| {
                     let delta = (delta - 0.15 * n as f32) / 0.7;
                     let delta = 1.0 - (0.5 - delta).abs() * 2.;

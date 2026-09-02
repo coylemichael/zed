@@ -4,6 +4,13 @@ use std::time::Duration;
 
 use gpui::ease_out_quint;
 
+/// Upper bound on how often purely decorative, indefinitely repeating animations
+/// (spinners, pulsing labels) re-render. They signal activity rather than motion
+/// fidelity, so re-rendering them on every display frame (60-240 Hz) mostly spends
+/// CPU re-laying-out the view that contains them. Applied through
+/// [`gpui::Animation::with_max_fps`].
+pub const DECORATIVE_ANIMATION_MAX_FPS: f32 = 30.0;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum AnimationDuration {
     Instant = 50,

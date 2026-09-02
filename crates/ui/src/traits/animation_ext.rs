@@ -33,7 +33,9 @@ pub trait CommonAnimationExt: AnimationExt {
     {
         self.with_animation(
             id,
-            Animation::new(Duration::from_secs(duration)).repeat_synced(),
+            Animation::new(Duration::from_secs(duration))
+                .repeat_synced()
+                .with_max_fps(crate::animation::DECORATIVE_ANIMATION_MAX_FPS),
             |component, delta| component.transform(Transformation::rotate(percentage(delta))),
         )
     }

@@ -127,6 +127,7 @@ impl RenderOnce for MentionCrease {
                                 "loading-context-crease",
                                 Animation::new(Duration::from_secs(2))
                                     .repeat()
+                                    .with_max_fps(ui::animation::DECORATIVE_ANIMATION_MAX_FPS)
                                     .with_easing(pulsating_between(0.4, 0.8)),
                                 |label, delta| label.opacity(delta),
                             )

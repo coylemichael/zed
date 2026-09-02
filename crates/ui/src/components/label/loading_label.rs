@@ -88,7 +88,9 @@ impl RenderOnce for LoadingLabel {
             "loading_label",
             vec![
                 Animation::new(Duration::from_secs(1)),
-                Animation::new(Duration::from_secs(1)).repeat(),
+                Animation::new(Duration::from_secs(1))
+                    .repeat()
+                    .with_max_fps(crate::animation::DECORATIVE_ANIMATION_MAX_FPS),
             ],
             move |mut label, animation_ix, delta| {
                 match animation_ix {

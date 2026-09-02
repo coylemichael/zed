@@ -3413,6 +3413,7 @@ impl Render for ConversationView {
                             "loading-agent-label",
                             Animation::new(Duration::from_secs(2))
                                 .repeat()
+                                .with_max_fps(ui::animation::DECORATIVE_ANIMATION_MAX_FPS)
                                 .with_easing(pulsating_between(0.3, 0.7)),
                             |label, delta| label.alpha(delta),
                         ),

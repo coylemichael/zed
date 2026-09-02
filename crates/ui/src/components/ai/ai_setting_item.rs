@@ -165,6 +165,7 @@ impl RenderOnce for AiSettingItem {
                     format!("icon-pulse-{}", id),
                     Animation::new(Duration::from_secs(2))
                         .repeat()
+                        .with_max_fps(crate::animation::DECORATIVE_ANIMATION_MAX_FPS)
                         .with_easing(pulsating_between(0.4, 0.8)),
                     |element, delta| element.opacity(delta),
                 )

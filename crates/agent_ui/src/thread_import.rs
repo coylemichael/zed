@@ -524,6 +524,7 @@ impl Render for ThreadImportModal {
                         "pulsating-icon",
                         Animation::new(Duration::from_secs(1))
                             .repeat()
+                            .with_max_fps(ui::animation::DECORATIVE_ANIMATION_MAX_FPS)
                             .with_easing(pulsating_between(0.2, 0.6)),
                         |icon, delta| icon.opacity(delta),
                     )
