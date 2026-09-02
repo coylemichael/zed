@@ -165,6 +165,28 @@ If you are using `amdvlk`, the default open-source AMD graphics driver, you may 
 
 For more information, the [Arch guide to Vulkan](https://wiki.archlinux.org/title/Vulkan) has some good steps that translate well to most distributions.
 
+#### Hybrid GPU laptops
+
+On laptops with both an integrated GPU (Intel or AMD) and a discrete GPU (usually NVIDIA), Zed prefers the GPU that your compositor renders with, so that it uses the same GPU as the rest of your desktop. If no adapter matches the compositor's GPU, Zed instead picks by device type and prefers the discrete GPU over the integrated one.
+
+This fallback is what happens when the Vulkan driver for the integrated GPU is not installed: the integrated GPU is then only visible through OpenGL, which does not report a device ID, so Zed cannot recognize it as the compositor's GPU and ends up on the discrete GPU. Zed still works, but the discrete GPU stays powered on for as long as Zed is running, which noticeably shortens battery life.
+
+You can check which GPU Zed picked by looking in the Zed log (`~/.local/share/zed/logs/Zed.log`) for the `Using GPU: ...` line. The `Found N GPU adapter(s):` list earlier in the log shows every adapter Zed found; if your integrated GPU only appears with `backend=Gl`, its Vulkan driver is missing.
+
+To fix this, install the Vulkan driver for your integrated GPU:
+
+- Arch Linux: `vulkan-intel` (Intel) or `vulkan-radeon` (AMD)
+- Debian/Ubuntu: `mesa-vulkan-drivers`
+- Fedora: `mesa-vulkan-drivers`
+
+Then check that both GPUs are listed (`vulkaninfo` is part of the `vulkan-tools` package):
+
+```
+vulkaninfo --summary
+```
+
+Restart Zed afterwards and check the log again; it should now report the integrated GPU. If you would rather run Zed on the discrete GPU on purpose, see [Forcing Zed to use a specific GPU](#forcing-zed-to-use-a-specific-gpu) below.
+
 #### Forcing Zed to use a specific GPU
 
 There are a few different ways to force Zed to use a specific GPU:
